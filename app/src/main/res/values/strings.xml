@@ -3,4 +3,7 @@
     <string name="message">Message</string>
     <string name="title">Title</string>
     <string name="add_note">add note</string>
+    <string name="exit">exit</string>
+    <string name="back">back</string>
+    <string name="save">save</string>
 </resources>
