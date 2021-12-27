@@ -3,7 +3,9 @@ package com.example.notes.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.example.notes.MainActivity
 import com.example.notes.R
+import com.google.android.material.appbar.MaterialToolbar
 
 class NoteDetailFragment : Fragment() {
 
@@ -17,6 +19,12 @@ class NoteDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_note_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toolbar: MaterialToolbar = view.findViewById(R.id.toolbar)
+        (activity as MainActivity).setToolbar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

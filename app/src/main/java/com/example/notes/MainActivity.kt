@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.notes.view.NoteDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 
 private const val transaction = "TRANSACTION"
 
@@ -16,12 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
 
-        setSupportActionBar(toolbar)
+        setToolbar(toolbar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _view ->
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, NoteDetailFragment())
                 .addToBackStack(transaction)
@@ -39,5 +43,19 @@ class MainActivity : AppCompatActivity() {
             "exit" -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun setToolbar(toolbar: MaterialToolbar) {
+        setSupportActionBar(toolbar)
+        val drawer: DrawerLayout = findViewById(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawer,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 }
