@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navView: NavigationView = findViewById(R.id.nav_view)
         val fab: FloatingActionButton = findViewById(R.id.fab)
         val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
 
