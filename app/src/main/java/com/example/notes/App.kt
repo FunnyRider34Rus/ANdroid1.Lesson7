@@ -6,7 +6,7 @@ import com.example.notes.model.NoteRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
-class App  : Application() {
+object App  : Application() {
 
     private val applicationScope = CoroutineScope(SupervisorJob())
 

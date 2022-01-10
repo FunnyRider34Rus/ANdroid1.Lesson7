@@ -6,10 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.notes.view.ExitDialogFragment
 import com.example.notes.view.NoteDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationView
 
 private const val transaction = "TRANSACTION"
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId.toString()) {
-            "exit" -> finish()
+            "exit" -> this.finish()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -56,5 +56,11 @@ class MainActivity : AppCompatActivity() {
         )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    override fun onBackPressed() {
+        val exitDialog = ExitDialogFragment()
+        exitDialog.show(supportFragmentManager, "exitDialog")
+        super.onBackPressed()
     }
 }
