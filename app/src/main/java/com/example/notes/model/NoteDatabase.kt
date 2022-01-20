@@ -22,15 +22,14 @@ abstract class NoteDatabase : RoomDatabase() {
             context: Context,
             scope: CoroutineScope
         ): NoteDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
+            // если INSTANCE не пустой, то вернуть его
+            // если пустой, то создать базу
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NoteDatabase::class.java,
                     "note_database.db"
                 )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
                     .fallbackToDestructiveMigration()
                     .addCallback(NoteDatabaseCallback(scope))
                     .build()
@@ -43,13 +42,10 @@ abstract class NoteDatabase : RoomDatabase() {
         private class NoteDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
-            /**
-             * Override the onCreate method to populate the database.
-             */
+
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                // If you want to keep the data through app restarts,
-                // comment out the following line.
+                //пересоздание базы
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         populateDatabase(database.noteDAO())
@@ -58,14 +54,8 @@ abstract class NoteDatabase : RoomDatabase() {
             }
         }
 
-        /**
-         * Populate the database in a new coroutine.
-         * If you want to start with more words, just add them.
-         */
+        //заполнение новой базы
         suspend fun populateDatabase(noteDao: NoteDao) {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate on creation.
-            //noteDao.delete(note)
 
             var note = Note(UUID.randomUUID().toString(), "Title1", "Message1", Date().toString())
             noteDao.insert(note)

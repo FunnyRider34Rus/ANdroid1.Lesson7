@@ -16,6 +16,6 @@ class NoteRepository(private val noteDao: NoteDao) {
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(note: Note) {
-        noteDao.delete()
+        noteDao.delete(note)
     }
 }
